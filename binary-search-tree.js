@@ -40,13 +40,26 @@ class BinarySearchTree {
       }
   }
 
+  search(val) {
+      let currentNode = this.root;
 
-  // RECURSIVE APPROACH -- stack overflow
+      while(currentNode) {  // loop stops if we reach the end (leaf) w/o a match
+          if(currentNode.val === val) return true;
+          if(val < currentNode.val) {   // val is < node, move down left
+              currentNode = currentNode.left
+          } else {    // val is greater, move down to right child
+              currentNode = currentNode.right;
+          }
+      }
+      return false;
+  }
+
+  // RECURSIVE APPROACH -- stack overflow!
   // search(val) {
   //     let currentNode = this.root;
 
   //     // BASE CASE
-  //     if(!this.root) return false;  // false for empty tree or no matches down the leg
+  //     if(!currentNode) return false;  // false for empty tree or no matches down the leg
   //     if(currentNode.val === val) return true;  // true if val = root - necessary ?
 
   //     // RECURSIVE CASE
@@ -69,21 +82,6 @@ class BinarySearchTree {
 
   //     // return false;  // if no matches -- redundant here?
   // }
-
-  search(val) {
-      let currentNode = this.root;
-
-      while(currentNode) {  // loop stops if we reach the end (leaf) w/o a match
-          if(currentNode.val === val) return true;
-          if(val < currentNode.val) {   // val is < node, move down left
-              currentNode = currentNode.left
-          } else {    // val is greater, move down to right child
-              currentNode = currentNode.right;
-          }
-      }
-      return false;
-  }
-
 
   preOrderTraversal(currentNode = this.root) {
     // Your code here
