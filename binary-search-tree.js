@@ -54,47 +54,52 @@ class BinarySearchTree {
       return false;
   }
 
-  // RECURSIVE APPROACH -- stack overflow!
+  // RECURSIVE APPROACH -- returning false!
   // search(val) {
-  //     let currentNode = this.root;
+  //     // let currentNode = this.root;
 
   //     // BASE CASE
-  //     if(!currentNode) return false;  // false for empty tree or no matches down the leg
-  //     if(currentNode.val === val) return true;  // true if val = root - necessary ?
-
-  //     // RECURSIVE CASE
-
-  //     // let stack = [currentNode];
-  //     // while(stack.length >= 0) {
-  //     // }
+  //     if(this.root === null) return false;  // false for empty tree or no matches down the leg
+  //     if(this.root.val === val) return true;  // true if val = root - necessary ?
 
   //     // If the target is less than the root value, recursively search the left child
-  //     if(val < currentNode.val) {
-  //         currentNode = currentNode.left;  // traverse to left
+  //     if(this.root.val && val < this.root.val) {
+  //         this.root = this.root.left;  // traverse to left
   //         return this.search(val);
   //     }
 
   //     // If the target is greater than the root value, recursively search the right child
-  //     if(val > currentNode.val) {
-  //         currentNode = currentNode.right;  // traverse to right
+  //     if(this.root.val && val > this.root.val) {
+  //         this.root = this.root.right;  // traverse to right
   //         return this.search(val);
   //     }
-
-  //     // return false;  // if no matches -- redundant here?
   // }
 
   preOrderTraversal(currentNode = this.root) {
-    // Your code here
+    if(!currentNode) return;  // if we reach the end of tree, return to bounce back up a level
+      console.log(currentNode.val);
+      // if there is left child, traverse to left      // see line 79
+    //   if(currentNode.left) {     // not needed, covered by line 79
+          this.preOrderTraversal(currentNode.left);
+    //   }
+      // after the left, traverse to right
+    //   if(currentNode.right) {
+          this.preOrderTraversal(currentNode.right);
+    //  }
   }
-
 
   inOrderTraversal(currentNode = this.root) {
-    // Your code here
+    if(!currentNode) return;
+    this.inOrderTraversal(currentNode.left);
+    console.log(currentNode.val);
+    this.inOrderTraversal(currentNode.right);
   }
 
-
   postOrderTraversal(currentNode = this.root) {
-    // Your code here
+    if(!currentNode) return;
+    this.postOrderTraversal(currentNode.left);
+    this.postOrderTraversal(currentNode.right);
+    console.log(currentNode.val);
   }
 
     // Breadth First Traversal - Iterative
@@ -120,16 +125,18 @@ bst.insert(3);
 bst.insert(5);
 bst.insert(7);
 
-console.log(bst);
-console.log(bst.search(1)) // true
-console.log(bst.search(2)) // true
-console.log(bst.search(3)) // true
-console.log(bst.search(4)) // true
-console.log(bst.search(5)) // true
-console.log(bst.search(6)) // true
-console.log(bst.search(7)) // true
-console.log(bst.search(10)) // true
+// console.log(bst);
+// console.log(bst.search(1)) // true
+// console.log(bst.search(2)) // true
+// console.log(bst.search(3)) // true
+// console.log(bst.search(4)) // true
+// console.log(bst.search(5)) // true
+// console.log(bst.search(6)) // true
+// console.log(bst.search(7)) // true
+// console.log(bst.search(10)) // false
 
-
+bst.preOrderTraversal();
+bst.inOrderTraversal();
+bst.postOrderTraversal();
 
 module.exports = { BinarySearchTree, TreeNode };
