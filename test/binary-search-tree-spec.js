@@ -273,9 +273,9 @@ describe('Binary Search Tree', () => {
       expect(consoleSpy).on.nth(7).be.called.with(4);
 
     });
-  
+
   });
-  
+
   describe('Part 4: iterative traversals', () => {
     let consoleSpy;
 
