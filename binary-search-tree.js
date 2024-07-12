@@ -40,39 +40,39 @@ class BinarySearchTree {
       }
   }
 
-// // ITERATIVE APPROACH
-//   search(val) {
-//       let currentNode = this.root;
+// // ITERATIVE APPROACH -- no stack needed because we don't need to traverse every node
+  search(val) {      // because it's a BST we know which branch to go down during search
+      let currentNode = this.root;
 
-//       while(currentNode) {  // loop stops if we reach the end (leaf) w/o a match
-//           if(currentNode.val === val) return true;
-//           if(val < currentNode.val) {   // val is < node, move down left
-//               currentNode = currentNode.left
-//           } else {    // val is greater, move down to right child
-//               currentNode = currentNode.right;
-//           }
-//       }
-//       return false;
-//   }
+      while(currentNode) {  // loop stops if we reach the end (leaf) w/o a match
+          if(currentNode.val === val) return true;
+          if(val < currentNode.val) {   // val is < node, move down left
+              currentNode = currentNode.left
+          } else {    // val is greater, move down to right child
+              currentNode = currentNode.right;
+          }
+      }
+      return false;
+  }
 
   // // RECURSIVE APPROACH
-  search(val, currentNode = this.root) {
-    //   let currentNode = this.root;    // declare this as default only when no currenNode is passed in
-                                        // so function can be called recursively on new nodes
-      // BASE CASE
-      if(currentNode === null) return false;  // false for empty tree or no matches down the leg - if(!currentNode) also works
-      if(currentNode.val === val) return true;  // true if val = root - necessary ?
+  // search(val, currentNode = this.root) {
+  //   //   let currentNode = this.root;    // declare this as default only when no currenNode is passed in
+  //                                       // so function can be called recursively on new nodes
+  //     // BASE CASE
+  //     if(currentNode === null) return false;  // false for empty tree or no matches down the leg - if(!currentNode) also works
+  //     if(currentNode.val === val) return true;  // true if val = root - necessary ?
 
-      // If the target is less than the root value, recursively search the left child
-      if(currentNode.val && val < currentNode.val) {  // if(val < currentNode.val) also works
-          return this.search(val, currentNode.left);  // use 'return' if we have an either/or situation such as left or right-
-      }                                               // if we might have to keep going left, recurse without returning
+  //     // If the target is less than the root value, recursively search the left child
+  //     if(currentNode.val && val < currentNode.val) {  // if(val < currentNode.val) also works
+  //         return this.search(val, currentNode.left);  // use 'return' if we have an either/or situation such as left or right-
+  //     }                                               // if we might have to keep going left, recurse without returning
 
-      // If the target is greater than the root value, recursively search the right child
-      if(currentNode.val && val > currentNode.val) {
-          return this.search(val, currentNode.right);
-      }
-  }
+  //     // If the target is greater than the root value, recursively search the right child
+  //     if(currentNode.val && val > currentNode.val) {
+  //         return this.search(val, currentNode.right);
+  //     }
+  // }
 
   preOrderTraversal(currentNode = this.root) {
     if(!currentNode) return;  // if we reach the end of tree, return to bounce back up a level
@@ -121,42 +121,46 @@ class BinarySearchTree {
 
   // // Depth First Traversal - Iterative - using array stack
 
-  depthFirstTraversal() {
-    // initialize a stack with the root node - educational, could also use JS's call stack as above
-    const stack = [this.root];
+  // depthFirstTraversal() {
+  //   // initialize a stack with the root node - educational, could also use JS's call stack as above
+  //   const stack = [this.root];
 
-    // while the stack is not empty
-    while(stack.length) {
-        // print and remove first node in stack
-        let curr = stack.pop();
-        console.log(curr.val);
+  //   // while the stack is not empty
+  //   while(stack.length) {
+  //       // print and remove first node in stack
+  //       let curr = stack.pop();
+  //       console.log(curr.val);
 
-        // if the node has a left node
-        // push the left node on the back of the stack
-        if(curr.left) stack.push(curr.left);
+  //       // if the node has a left node
+  //       // push the left node on the back of the stack
+  //       if(curr.left) stack.push(curr.left);
 
-        // if the node has a right node
-        // push the right node on the back of the stack
-        if(curr.right) stack.push(curr.right);
-    }
-  }
-
-  // // Depth First Traversal - Iterative - using call stack - STACK OVERFLOW
-
-  // depthFirstTraversal(current = this.root) {
-
-  //     while(current) {
-  //         console.log(current.val);
-  //         if(current.left) {
-  //             current = current.left;
-  //             this.depthFirstTraversal(current);
-  //         } else
-  //         if(current.right) {
-  //           current = current.right;
-  //           this.depthFirstTraversal(current);
-  //         }
-  //     }
+  //       // if the node has a right node
+  //       // push the right node on the back of the stack
+  //       if(curr.right) stack.push(curr.right);
+  //   }
   // }
+
+  // // Depth First Traversal - Iterative - use array stack to visit every node
+
+  depthFirstTraversal() {
+      const stack = [this.root];   // stack array for depth, queue array for breadth
+
+      while(stack.length) {
+          let current = stack.pop();
+          console.log(current.val);   // this is PRE-ORDER bcuz console log happens first
+
+          if(current.left) {
+              // current = current.left;  // DO NOT REASSIGN bcuz it will jump to the wrong node prematurely
+              stack.push(current.left);
+          }
+          // console.log(current.val);   // IN-ORDER - to do in order, go all the way to the left before printing
+          if(current.right) {
+              // current = current.right;  // DO NOT REASSIGN !
+              stack.push(current.right);
+          }
+      }
+  }
 
 }
 
