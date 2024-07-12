@@ -40,40 +40,38 @@ class BinarySearchTree {
       }
   }
 
-  search(val) {
-      let currentNode = this.root;
+//   search(val) {
+//       let currentNode = this.root;
 
-      while(currentNode) {  // loop stops if we reach the end (leaf) w/o a match
-          if(currentNode.val === val) return true;
-          if(val < currentNode.val) {   // val is < node, move down left
-              currentNode = currentNode.left
-          } else {    // val is greater, move down to right child
-              currentNode = currentNode.right;
-          }
-      }
-      return false;
-  }
+//       while(currentNode) {  // loop stops if we reach the end (leaf) w/o a match
+//           if(currentNode.val === val) return true;
+//           if(val < currentNode.val) {   // val is < node, move down left
+//               currentNode = currentNode.left
+//           } else {    // val is greater, move down to right child
+//               currentNode = currentNode.right;
+//           }
+//       }
+//       return false;
+//   }
 
   // RECURSIVE APPROACH -- returning false!
-  // search(val) {
-  //     // let currentNode = this.root;
+  search(val, currentNode = this.root) {
+    //   let currentNode = this.root;    // declare this as default only when no currenNode is passed in
+                                        // so function can be called recursively on new nodes
+      // BASE CASE
+      if(currentNode === null) return false;  // false for empty tree or no matches down the leg
+      if(currentNode.val === val) return true;  // true if val = root - necessary ?
 
-  //     // BASE CASE
-  //     if(this.root === null) return false;  // false for empty tree or no matches down the leg
-  //     if(this.root.val === val) return true;  // true if val = root - necessary ?
+      // If the target is less than the root value, recursively search the left child
+      if(currentNode.val && val < currentNode.val) {
+          return this.search(val, currentNode.left);
+      }
 
-  //     // If the target is less than the root value, recursively search the left child
-  //     if(this.root.val && val < this.root.val) {
-  //         this.root = this.root.left;  // traverse to left
-  //         return this.search(val);
-  //     }
-
-  //     // If the target is greater than the root value, recursively search the right child
-  //     if(this.root.val && val > this.root.val) {
-  //         this.root = this.root.right;  // traverse to right
-  //         return this.search(val);
-  //     }
-  // }
+      // If the target is greater than the root value, recursively search the right child
+      if(currentNode.val && val > currentNode.val) {
+          return this.search(val, currentNode.right);
+      }
+  }
 
   preOrderTraversal(currentNode = this.root) {
     if(!currentNode) return;  // if we reach the end of tree, return to bounce back up a level
@@ -105,7 +103,7 @@ class BinarySearchTree {
     // Breadth First Traversal - Iterative
   breadthFirstTraversal() {
       // initialize a queue with the root node
-    const queue = [this.root];
+    const queue = [this.root];              // must use a placeholder array to use a queue sequence
     // while the queue is not empty
     while(queue.length) {
         // print and remove first node in queue
@@ -122,7 +120,7 @@ class BinarySearchTree {
 
   // Depth First Traversal - Iterative
   depthFirstTraversal() {
-    // initialize a stack with the root node
+    // initialize a stack with the root node - educational, could also use JS's call stack as above
     const stack = [this.root];
 
     // while the stack is not empty
@@ -157,15 +155,15 @@ bst.insert(3);
 bst.insert(5);
 bst.insert(7);
 
-// console.log(bst);
+console.log(bst);
 // console.log(bst.search(1)) // true
-// console.log(bst.search(2)) // true
-// console.log(bst.search(3)) // true
-// console.log(bst.search(4)) // true
-// console.log(bst.search(5)) // true
-// console.log(bst.search(6)) // true
-// console.log(bst.search(7)) // true
-// console.log(bst.search(10)) // false
+console.log(bst.search(2)) // true
+console.log(bst.search(3)) // true
+console.log(bst.search(4)) // true
+console.log(bst.search(5)) // true
+console.log(bst.search(6)) // true
+console.log(bst.search(7)) // true
+console.log(bst.search(10)) // false
 
 bst.preOrderTraversal();
 bst.inOrderTraversal();
