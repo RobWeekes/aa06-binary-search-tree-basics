@@ -64,8 +64,8 @@ class BinarySearchTree {
 
       // If the target is less than the root value, recursively search the left child
       if(currentNode.val && val < currentNode.val) {
-          return this.search(val, currentNode.left);
-      }
+          return this.search(val, currentNode.left);  // use 'return' if we have an either/or situation such as left or right-
+      }                                               // if we might have to keep going left, recurse without returning
 
       // If the target is greater than the root value, recursively search the right child
       if(currentNode.val && val > currentNode.val) {
