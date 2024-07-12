@@ -24,7 +24,7 @@ class BinarySearchTree {
       if(val < currentNode.val) {   // val is smaller than node at root <- go down left leg
           // check if left node is empty --
           if(currentNode.left === null) {   // if left node empty / if(!currentNode.left)
-              currentNode.left = newNode;   // set new node to root's left node
+              currentNode.left = newNode;   // set new node to current node's left node
           } else {   // if left node is filled, traverse down left & recurse evaluate
               this.insert(val, currentNode.left);
           }
@@ -40,6 +40,7 @@ class BinarySearchTree {
       }
   }
 
+// // ITERATIVE APPROACH
 //   search(val) {
 //       let currentNode = this.root;
 
@@ -54,16 +55,16 @@ class BinarySearchTree {
 //       return false;
 //   }
 
-  // RECURSIVE APPROACH -- returning false!
+  // // RECURSIVE APPROACH
   search(val, currentNode = this.root) {
     //   let currentNode = this.root;    // declare this as default only when no currenNode is passed in
                                         // so function can be called recursively on new nodes
       // BASE CASE
-      if(currentNode === null) return false;  // false for empty tree or no matches down the leg
+      if(currentNode === null) return false;  // false for empty tree or no matches down the leg - if(!currentNode) also works
       if(currentNode.val === val) return true;  // true if val = root - necessary ?
 
       // If the target is less than the root value, recursively search the left child
-      if(currentNode.val && val < currentNode.val) {
+      if(currentNode.val && val < currentNode.val) {  // if(val < currentNode.val) also works
           return this.search(val, currentNode.left);  // use 'return' if we have an either/or situation such as left or right-
       }                                               // if we might have to keep going left, recurse without returning
 
@@ -78,10 +79,10 @@ class BinarySearchTree {
       console.log(currentNode.val);
       // if there is left child, traverse to left      // see line 79
     //   if(currentNode.left) {     // not needed, covered by line 79
-          this.preOrderTraversal(currentNode.left);
-    //   }
-      // after the left, traverse to right
-    //   if(currentNode.right) {
+          this.preOrderTraversal(currentNode.left);   // goes all the way to the left until reaches leaf
+    //   }                                            // it will run method on (null) and return stack on line 79,
+      // after the left, traverse to right            // then it will try to traverse to the right on level above (leaf's predecessor)
+    //   if(currentNode.right) {                      // at the leaf it will also run preOrderTraversal(null)
           this.preOrderTraversal(currentNode.right);
     //  }
   }
