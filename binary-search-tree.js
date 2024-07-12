@@ -119,7 +119,8 @@ class BinarySearchTree {
     }
   }
 
-  // Depth First Traversal - Iterative
+  // // Depth First Traversal - Iterative - using array stack
+
   depthFirstTraversal() {
     // initialize a stack with the root node - educational, could also use JS's call stack as above
     const stack = [this.root];
@@ -139,6 +140,23 @@ class BinarySearchTree {
         if(curr.right) stack.push(curr.right);
     }
   }
+
+  // // Depth First Traversal - Iterative - using call stack - STACK OVERFLOW
+
+  // depthFirstTraversal(current = this.root) {
+
+  //     while(current) {
+  //         console.log(current.val);
+  //         if(current.left) {
+  //             current = current.left;
+  //             this.depthFirstTraversal(current);
+  //         } else
+  //         if(current.right) {
+  //           current = current.right;
+  //           this.depthFirstTraversal(current);
+  //         }
+  //     }
+  // }
 
 }
 
